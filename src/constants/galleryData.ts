@@ -1,7 +1,7 @@
 // src/constants/galleryData.ts
 
 // 1. Cloudinary Base URL mo
-const baseUrl = "https://res.cloudinary.com/dlk93aehl/image/upload/";
+const baseUrl = "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/";
 
 
 const totalPictures = 80;
@@ -12,7 +12,7 @@ const cloudinaryImages = Array.from({ length: totalPictures }, (_, i) =>
 );
 
 const fallbackImages = [
-  'https://res.cloudinary.com/dlk93aehl/image/upload/v1774459535/g30.jpg'
+  'https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/v1774459535/g30.jpg'
 ];
 
 const shuffleArray = <T,>(array: T[]): T[] => {

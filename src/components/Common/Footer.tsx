@@ -1,9 +1,9 @@
 // src/components/Footer.tsx
-const birLogo = "https://res.cloudinary.com/dlk93aehl/image/upload/BIR.png";
-const cdaLogo = "https://res.cloudinary.com/dlk93aehl/image/upload/CDA.png";
-const dtiLogo = "https://res.cloudinary.com/dlk93aehl/image/upload/DTI.png";
-const lguLogo = "https://res.cloudinary.com/dlk93aehl/image/upload/LGU.png";
-const secLogo = "https://res.cloudinary.com/dlk93aehl/image/upload/SEC.png";
+const birLogo = "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/BIR.png";
+const cdaLogo = "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/CDA.png";
+const dtiLogo = "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/DTI.png";
+const lguLogo = "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/LGU.png";
+const secLogo = "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/SEC.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();

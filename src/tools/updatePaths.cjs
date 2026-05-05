@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const cloudinaryUrl = 'https://res.cloudinary.com/dlk93aehl/image/upload/';
+const cloudinaryUrl = 'https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/';
 
 function processFile(filePath, replacements) {
     if(!fs.existsSync(filePath)) return;

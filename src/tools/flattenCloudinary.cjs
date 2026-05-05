@@ -17,7 +17,7 @@ function flattenCloudinaryPaths(filePath) {
 
     // Also replace the LogoWhite.jpg fallback from '/LogoWhite.jpg' to the Cloudinary URL in DetailModal.tsx
     if (filePath.includes('DetailModal.tsx')) {
-        updatedContent = updatedContent.replace(/['"]\/LogoWhite\.jpg['"]/g, "'https://res.cloudinary.com/dlk93aehl/image/upload/LogoWhite.jpg'");
+        updatedContent = updatedContent.replace(/['"]\/LogoWhite\.jpg['"]/g, "'https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/LogoWhite.jpg'");
     }
 
     if (content !== updatedContent) {
