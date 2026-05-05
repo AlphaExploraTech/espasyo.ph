@@ -1,217 +1,236 @@
-// src/components/Contact.tsx
-import { useRef, useLayoutEffect, useEffect, useState } from 'react';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import Navbar from './Common/Navbar';
-import { MapPin, Phone, Mail, Facebook, Send } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Common/Navbar';
+import Footer from '../components/Common/Footer';
+import { Mail, Phone, MapPin, Send, CheckCircle2 } from 'lucide-react';
+import { useContactForm } from '../hooks/useContactForm';
+import { useContactAnimations } from '../hooks/useContactAnimations';
 
-const Contact = () => {
-    const container = useRef<HTMLDivElement>(null);
-    const formRef = useRef<HTMLFormElement>(null);
-    const navigate = useNavigate();
+export interface ContactProps {
+  hideNavbar?: boolean;
+}
 
-    // --- FORM STATE LOGIC ---
-    const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        message: ''
-    });
-    const [isLoading, setIsLoading] = useState(false);
-    const [statusMessage, setStatusMessage] = useState({ type: '', text: '' });
+const Contact = ({ hideNavbar = false }: ContactProps) => {
+  const { formState, isSubmitting, submitted, error, handleChange, handleSubmit } = useContactForm();
+  const { containerRef, contentRef, formRef } = useContactAnimations();
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+  return (
+    <div ref={containerRef} className="min-h-screen bg-[#FDF4DC] text-[#3A2618] selection:bg-[#3A2618] selection:text-[#FDF4DC]">
+      {!hideNavbar && <Navbar theme="default" />}
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsLoading(true);
-        setStatusMessage({ type: '', text: '' });
+      <main className={`pb-20 px-4 sm:px-8 max-w-[1400px] mx-auto flex flex-col justify-center items-center ${hideNavbar ? 'pt-20' : 'pt-32 lg:pt-40 min-h-[calc(100vh-160px)]'}`}>
+        {/* Subtle Divider at Top of Form (When embedded) */}
+        {hideNavbar && (
+          <div className="w-full flex justify-center mb-10 opacity-0 animate-[fade-in_1s_ease-out_forwards]">
+            <div className="w-16 h-[1px] bg-[#4B533E]/20" />
+          </div>
+        )}
 
-        try {
-            // Send to the Next.js/Vercel serverless function
-            const response = await fetch('/api/send', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    firstName: formData.firstName,
-                    lastName: formData.lastName,
-                    email: formData.email,
-                    company: "N/A (Espasyo Inquiry)",
-                    service: "Espasyo Inquiry",
-                    details: formData.message
-                }),
-            });
+        <div className="w-full max-w-[1100px] bg-[#F2E8D5] rounded-[2.5rem] overflow-hidden shadow-[0_30px_60px_-15px_rgba(44,54,40,0.3)] flex flex-col lg:flex-row border border-[#4B533E]/10 relative z-10 transition-all">
 
-            if (response.ok) {
-                setStatusMessage({ type: 'success', text: 'Thank you! Your inquiry has been sent.' });
-                setFormData({ firstName: '', lastName: '', email: '', message: '' });
-            } else {
-                const errorData = await response.json();
-                throw new Error(errorData.error?.message || 'Failed to send');
-            }
-        } catch (error) {
-            setStatusMessage({ type: 'error', text: 'Failed to send message. Please try again.' });
-        } finally {
-            setIsLoading(false);
-        }
-    };
+          {/* LEFT: CONTENT (Dark Green) */}
+          <div ref={contentRef} className="lg:w-[45%] bg-[#3A4332] p-10 lg:p-14 text-[#FDF4DC] flex flex-col justify-between relative overflow-hidden">
+            {/* Background Accent */}
+            <div className="absolute top-0 left-0 w-full h-full bg-[#2C3628] opacity-50 z-0"></div>
 
-    // --- NUCLEAR SCROLL RESET ---
-    useLayoutEffect(() => {
-        if ('scrollRestoration' in window.history) {
-            window.history.scrollRestoration = 'manual';
-        }
-        window.scrollTo(0, 0);
-        document.body.scrollTop = 0;
-        document.documentElement.scrollTop = 0;
-    }, []);
+            <div className="relative z-10 space-y-10">
+              <div className="space-y-1">
+                <h1 className="text-8xl sm:text-8xl font-display font-bold uppercase tracking-tighter text-[#DFA878]">
+                  ESPASYO
+                </h1>
+                <p className="text-lg font-body tracking-[0.2em] uppercase text-[#FDF4DC]/60 font-semibold">
+                  Study & Office Hub
+                </p>
+              </div>
 
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            window.scrollTo(0, 0);
-        }, 10);
-        return () => clearTimeout(timer);
-    }, []);
-
-    useGSAP(() => {
-        gsap.fromTo(container.current,
-            { opacity: 0 },
-            { opacity: 1, duration: 1 }
-        );
-        gsap.fromTo(".contact-card",
-            { y: 100, opacity: 0 },
-            { y: 0, opacity: 1, duration: 1, delay: 0.2, ease: "power3.out" }
-        );
-        // FIX: Use fromTo and a specific class name for safety
-        gsap.fromTo(".form-animate",
-            { y: 20, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, delay: 0.6, ease: "power2.out" }
-        );
-    }, { scope: container });
-
-    const handleBack = () => {
-        navigate('/', {
-            state: {
-                skipIntro: true,
-                scrollToSection: 'services'
-            }
-        });
-    };
-
-    return (
-        <div ref={container} className="min-h-screen bg-[#2C3628] text-[#F0EAD6] flex flex-col">
-            <Navbar theme="brown" />
-
-            <div className="flex-1 flex flex-col items-center justify-center px-4 md:px-8 py-24 relative">
-
-                <div className="md:w-1/4 lg:w-1/5 flex flex-col z-20 pb-8 h-full">
-                    <button onClick={handleBack} className="absolute top-28 left-8 md:left-12 flex items-center gap-2 text-xs font-bold uppercase tracking-widest hover:text-[#D4A373] transition-colors z-10 opacity-80">
-                        <span>←</span> Back
-                    </button>
+              <div className="space-y-8 pl-1">
+                <div className="flex items-start gap-5">
+                  <div className="w-8 h-8 rounded-full bg-[#FDF4DC]/10 flex items-center justify-center shrink-0 text-[#FDF4DC]">
+                    <MapPin size={16} />
+                  </div>
+                  <div>
+                    <p className="text-[28px] font-bold uppercase tracking-[0.15em] text-[#DFA878] mb-1">Visit Us</p>
+                    <p className="text-base font-body leading-relaxed text-[#FDF4DC]/90">
+                      6A T. Bugallon Street, Marikina Heights,<br />
+                      Marikina City, Philippines
+                    </p>
+                  </div>
                 </div>
 
-                <div className="contact-card w-full max-w-6xl bg-[#F0EAD6] rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row min-h-[600px]">
-                    {/* LEFT SIDE: INFO */}
-                    <div className="w-full md:w-1/2 bg-[#3E4A35] text-[#F0EAD6] p-8 md:p-12 flex flex-col relative overflow-hidden">
-                        <div className="absolute -top-20 -left-20 w-64 h-64 bg-[#D4A373]/10 rounded-full blur-3xl" />
-                        <div className="relative z-10 flex flex-col h-full">
-                            <h2 className="font-display text-4xl md:text-5xl uppercase tracking-tighter mb-2 text-[#D4A373]">Espasyo</h2>
-                            <p className="font-body text-xs tracking-[0.2em] uppercase opacity-70 mb-12">Study & Office Hub</p>
-
-                            <div className="flex flex-col gap-8 mb-12">
-                                <div className="flex items-start gap-4 group">
-                                    <div className="p-3 bg-[#F0EAD6]/10 rounded-full group-hover:bg-[#D4A373] group-hover:text-[#2C3628] transition-colors"><MapPin size={20} /></div>
-                                    <div><h3 className="font-bold text-sm uppercase tracking-wider mb-1 text-[#D4A373]">Visit Us</h3><p className="text-sm opacity-80 leading-relaxed max-w-xs">6A T. Bugallon Street, Marikina Heights,<br />Marikina City, Philippines</p></div>
-                                </div>
-                                <div className="flex items-start gap-4 group">
-                                    <div className="p-3 bg-[#F0EAD6]/10 rounded-full group-hover:bg-[#D4A373] group-hover:text-[#2C3628] transition-colors"><Phone size={20} /></div>
-                                    <div><h3 className="font-bold text-sm uppercase tracking-wider mb-1 text-[#D4A373]">Call Us</h3><p className="text-sm opacity-80">0916 611 2928</p><p className="text-sm opacity-80">700 600 42</p></div>
-                                </div>
-                                <div className="flex items-start gap-4 group">
-                                    <div className="p-3 bg-[#F0EAD6]/10 rounded-full group-hover:bg-[#D4A373] group-hover:text-[#2C3628] transition-colors"><Mail size={20} /></div>
-                                    <div><h3 className="font-bold text-sm uppercase tracking-wider mb-1 text-[#D4A373]">Email Us</h3><p className="text-sm opacity-80">inquiry@espasyo.ph</p></div>
-                                </div>
-                            </div>
-
-                            <div className="mt-auto">
-                                <a href="https://www.facebook.com/espasyostudynofficehub" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 mb-6 text-sm font-bold uppercase tracking-widest hover:text-[#D4A373] transition-colors">
-                                    <Facebook size={18} /><span>Follow on Facebook</span>
-                                </a>
-                                <div className="w-full h-48 rounded-xl overflow-hidden border-2 border-[#F0EAD6]/10 shadow-lg relative group cursor-pointer">
-                                    <img
-                                        src="https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/v1774546085/espasyoMaps.png"
-                                        alt="Espasyo Location Map"
-                                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
-                                    />
-                                    <a
-                                        href="https://maps.app.goo.gl/fF5wsVjxofb1co857"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors flex items-center justify-center"
-                                    >
-                                        <div className="bg-[#F0EAD6] text-[#2C3628] px-4 py-2 rounded-full font-display text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 shadow-xl">
-                                            Open in Google Maps
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* RIGHT SIDE: FORM */}
-                    <div className="w-full md:w-1/2 bg-[#F0EAD6] text-[#2C3628] p-8 md:p-12 flex flex-col relative pb-16">
-                        <div className="absolute bottom-0 right-0 w-64 h-64 bg-[#2C3628]/5 rounded-full blur-3xl pointer-events-none" />
-                        <div className="max-w-md mx-auto w-full relative z-10 py-4">
-                            <h2 className="font-display text-4xl md:text-5xl uppercase tracking-tighter mb-2">Get in Touch</h2>
-                            <p className="font-body text-sm opacity-70 mb-8">Fill out the form below and we'll get back to you shortly.</p>
-
-                            {/* Status Message Display */}
-                            {statusMessage.text && (
-                                <div className={`mb-6 p-4 rounded-xl border-2 flex items-center justify-center text-center font-display text-xs font-bold uppercase tracking-widest transition-all ${statusMessage.type === 'success'
-                                    ? 'bg-[#3E4A35]/10 border-[#3E4A35]/30 text-[#2C3628]'
-                                    : 'bg-[#C87941]/10 border-[#C87941]/30 text-[#C87941]'
-                                    }`}>
-                                    {statusMessage.type === 'success' ? '✓ ' : '⚠ '} {statusMessage.text}
-                                </div>
-                            )}
-
-                            <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-6 pb-6">
-                                {/* First Name & Last Name */}
-                                <div className="flex gap-4 form-animate">
-                                    <div className="group w-1/2">
-                                        <label className="block font-display text-xs font-bold uppercase tracking-widest mb-2 opacity-60 group-focus-within:opacity-100 group-focus-within:text-[#C87941] transition-all">First Name</label>
-                                        <input type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} required className="w-full bg-transparent border-b-2 border-[#2C3628]/20 py-3 text-lg focus:outline-none focus:border-[#C87941] transition-colors placeholder:text-[#2C3628]/30" placeholder="John" />
-                                    </div>
-                                    <div className="group w-1/2">
-                                        <label className="block font-display text-xs font-bold uppercase tracking-widest mb-2 opacity-60 group-focus-within:opacity-100 group-focus-within:text-[#C87941] transition-all">Last Name</label>
-                                        <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} required className="w-full bg-transparent border-b-2 border-[#2C3628]/20 py-3 text-lg focus:outline-none focus:border-[#C87941] transition-colors placeholder:text-[#2C3628]/30" placeholder="Doe" />
-                                    </div>
-                                </div>
-
-                                <div className="group form-animate">
-                                    <label className="block font-display text-xs font-bold uppercase tracking-widest mb-2 opacity-60 group-focus-within:opacity-100 group-focus-within:text-[#C87941] transition-all">Email Address</label>
-                                    <input type="email" name="email" value={formData.email} onChange={handleInputChange} required className="w-full bg-transparent border-b-2 border-[#2C3628]/20 py-3 text-lg focus:outline-none focus:border-[#C87941] transition-colors placeholder:text-[#2C3628]/30" placeholder="hello@example.com" />
-                                </div>
-
-                                <div className="group form-animate">
-                                    <label className="block font-display text-xs font-bold uppercase tracking-widest mb-2 opacity-60 group-focus-within:opacity-100 group-focus-within:text-[#C87941] transition-all">Message</label>
-                                    <textarea name="message" value={formData.message} onChange={handleInputChange} required className="w-full bg-transparent border-b-2 border-[#2C3628]/20 py-3 text-lg focus:outline-none focus:border-[#C87941] transition-colors placeholder:text-[#2C3628]/30 min-h-[100px] resize-none" placeholder="How can we help you?"></textarea>
-                                </div>
-
-                                <button type="submit" disabled={isLoading} className="form-animate group mt-2 w-full py-4 bg-[#2C3628] text-[#D4A373] border-2 border-[#2C3628] rounded-xl font-bold uppercase tracking-widest hover:bg-[#D4A373] hover:text-[#2C3628] transition-all flex items-center justify-center gap-3 shadow-xl disabled:opacity-50 disabled:cursor-not-allowed shrink-0">
-                                    <span>{isLoading ? 'Sending...' : 'Send Inquiry'}</span>
-                                    {!isLoading && <Send size={18} className="group-hover:translate-x-1 transition-transform" />}
-                                </button>
-                            </form>
-                        </div>
-                    </div>
+                <div className="flex items-start gap-5">
+                  <div className="w-8 h-8 rounded-full bg-[#FDF4DC]/10 flex items-center justify-center shrink-0 text-[#FDF4DC]">
+                    <Phone size={16} />
+                  </div>
+                  <div>
+                    <p className="text-[28px] font-bold uppercase tracking-[0.15em] text-[#DFA878] mb-1">Call Us</p>
+                    <p className="text-base font-body leading-relaxed text-[#FDF4DC]/90">
+                      0921 233 4805<br />
+                      700 600 42
+                    </p>
+                  </div>
                 </div>
+
+                <div className="flex items-start gap-5">
+                  <div className="w-8 h-8 rounded-full bg-[#FDF4DC]/10 flex items-center justify-center shrink-0 text-[#FDF4DC]">
+                    <Mail size={16} />
+                  </div>
+                  <div>
+                    <p className="text-[28px] font-bold uppercase tracking-[0.15em] text-[#DFA878] mb-1">Email Us</p>
+                    <p className="text-base font-body leading-relaxed text-[#FDF4DC]/90">inquire@espasyo.ph</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-4 space-y-12">
+                <a href="https://www.facebook.com/espasyostudynofficehub" target="_blank" rel="noreferrer" className="text-[18px] font-bold uppercase tracking-[0.15em] text-[#FDF4DC] flex items-center gap-3 hover:text-[#DFA878] transition-colors w-max">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" /></svg>
+                  Follow Us on Facebook
+                </a>
+
+                <div className="w-full h-32 sm:h-44 rounded-xl overflow-hidden shadow-lg relative group cursor-pointer">
+                  <img
+                    src="https://res.cloudinary.com/dlk93aehl/image/upload/v1774545067/espasyoMaps.png"
+                    alt="Espasyo Location Map"
+                    className="w-full h-full object-cover grayscale contrast-125 opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 scale-105 group-hover:scale-100"
+                  />
+                  <a
+                    href="https://maps.app.goo.gl/fF5wsVjxofb1co857"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors flex items-center justify-center"
+                  >
+                    <div className="bg-[#F2E8D5] text-[#3A2618] px-4 py-2 rounded-full font-display text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 shadow-xl">
+                      Open in Google Maps
+                    </div>
+                  </a>
+                </div>
+              </div>
             </div>
+          </div>
+
+          {/* RIGHT: FORM */}
+          <div className="lg:w-[55%] p-10 lg:p-16 bg-[#F2E8D5] relative flex flex-col justify-center">
+            <div className="mb-12 space-y-2">
+              <h2 className="text-8xl lg:text-7xl font-display font-bold uppercase tracking-tighter text-[#3A2618]">
+                Get In Touch
+              </h2>
+              <p className="text-lg text-[#3A2618]/70 font-body">
+                Fill out the form below and we'll get back to you shortly.
+              </p>
+            </div>
+
+            <form
+              ref={formRef}
+              onSubmit={handleSubmit}
+              className="space-y-8"
+            >
+              <div className="flex flex-col sm:flex-row gap-6">
+                <div className="space-y-2 w-full">
+                  <label className="text-[24px] font-bold uppercase tracking-widest text-[#3A2618]/60">First Name</label>
+                  <input
+                    required
+                    type="text"
+                    name="firstName"
+                    value={formState.firstName || ''}
+                    onChange={handleChange}
+                    className="w-full bg-transparent border-b border-[#3A2618]/20 py-2 focus:border-[#3A2618] outline-none transition-colors font-body text-base text-[#3A2618] placeholder:text-[#3A2618]/30"
+                    placeholder="Juan"
+                  />
+                </div>
+                <div className="space-y-2 w-full">
+                  <label className="text-[24px] font-bold uppercase tracking-widest text-[#3A2618]/60">Last Name</label>
+                  <input
+                    required
+                    type="text"
+                    name="lastName"
+                    value={formState.lastName || ''}
+                    onChange={handleChange}
+                    className="w-full bg-transparent border-b border-[#3A2618]/20 py-2 focus:border-[#3A2618] outline-none transition-colors font-body text-base text-[#3A2618] placeholder:text-[#3A2618]/30"
+                    placeholder="Dela Cruz"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[24px] font-bold uppercase tracking-widest text-[#3A2618]/60">Email Address</label>
+                <input
+                  required
+                  type="email"
+                  name="email"
+                  value={formState.email}
+                  onChange={handleChange}
+                  className="w-full bg-transparent border-b border-[#3A2618]/20 py-2 focus:border-[#3A2618] outline-none transition-colors font-body text-base text-[#3A2618] placeholder:text-[#3A2618]/30"
+                  placeholder="hello@example.com"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[24px] font-bold uppercase tracking-widest text-[#3A2618]/60">Inquiry Type</label>
+                <select
+                  required
+                  name="inquiryType"
+                  value={formState.inquiryType || ''}
+                  onChange={handleChange}
+                  className="w-full bg-transparent border-b border-[#3A2618]/20 py-2 focus:border-[#3A2618] outline-none transition-colors font-body text-base text-[#3A2618] appearance-none cursor-pointer"
+                >
+                  <option value="" disabled className="text-[#3A2618]/30">Select an option...</option>
+                  <option value="General Inquiry" className="text-[#3A2618] bg-[#F2E8D5]">General Inquiry</option>
+                  <option value="Consultation" className="text-[#3A2618] bg-[#F2E8D5]">Consultation</option>
+                  <option value="Booking" className="text-[#3A2618] bg-[#F2E8D5]">Booking</option>
+                  <option value="Other" className="text-[#3A2618] bg-[#F2E8D5]">Other</option>
+                </select>
+              </div>
+
+              <div className="space-y-2">
+                <label className="text-[24px] font-bold uppercase tracking-widest text-[#3A2618]/60">Message</label>
+                <textarea
+                  required
+                  name="message"
+                  value={formState.message}
+                  onChange={handleChange}
+                  rows={3}
+                  className="w-full bg-transparent border-b border-[#3A2618]/20 py-2 focus:border-[#3A2618] outline-none transition-colors font-body text-base text-[#3A2618] placeholder:text-[#3A2618]/30 resize-none"
+                  placeholder="How can we help you?"
+                />
+              </div>
+
+              <div className="pt-8 flex justify-center w-full">
+                <button
+                  disabled={isSubmitting || submitted}
+                  type="submit"
+                  className={`group w-full max-w-[280px] py-4 px-8 rounded-full flex items-center justify-center gap-3 transition-all duration-300 font-display text-sm uppercase tracking-widest shadow-md hover:shadow-lg
+                    ${submitted
+                      ? 'bg-transparent border border-[#3A2618] text-[#3A2618]'
+                      : 'bg-[#3A2618] text-[#DFA878] hover:bg-[#2A1A10] hover:scale-[1.02]'
+                    }
+                    ${isSubmitting ? 'opacity-70 pointer-events-none' : ''}
+                  `}
+                >
+                  {submitted ? (
+                    <>
+                      <CheckCircle2 size={20} className="animate-scale-up text-[#3A2618]" />
+                      <span className="font-bold">Message Sent!</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="font-bold">Send Message</span>
+                      <Send size={16} className={`${isSubmitting ? 'animate-bounce' : 'group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform'}`} />
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {error && (
+                <p className="text-center text-sm text-red-500 font-body mt-2">
+                  {error}
+                </p>
+              )}
+            </form>
+          </div>
         </div>
-    );
+      </main>
+
+      <Footer />
+    </div>
+  );
 };
 
 export default Contact;

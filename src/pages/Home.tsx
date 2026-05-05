@@ -1,3 +1,4 @@
+//C:\Users\judef\Documents\espasyo.ph\src\pages\Home.tsx
 import { useState, type MouseEvent, useEffect, useRef, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
