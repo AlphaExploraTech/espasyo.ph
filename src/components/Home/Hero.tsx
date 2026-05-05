@@ -2,17 +2,17 @@ import { useState, useEffect, type RefObject } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const images = [
-  'https://res.cloudinary.com/dlk93aehl/image/upload/v1774457587/landing7.jpg',
-  'https://res.cloudinary.com/dlk93aehl/image/upload/v1774457587/landing4.jpg',
-  'https://res.cloudinary.com/dlk93aehl/image/upload/v1774457587/landing1.jpg',
-  'https://res.cloudinary.com/dlk93aehl/image/upload/v1774457587/landing2.jpg',
-  'https://res.cloudinary.com/dlk93aehl/image/upload/v1774457587/landing3.jpg',
-  'https://res.cloudinary.com/dlk93aehl/image/upload/v1774457587/landing5.jpg',
-  'https://res.cloudinary.com/dlk93aehl/image/upload/v1774457587/landing6.jpg',
-  'https://res.cloudinary.com/dlk93aehl/image/upload/v1774457587/landing8.jpg',
-  'https://res.cloudinary.com/dlk93aehl/image/upload/v1774457587/landing9.jpg',
-  'https://res.cloudinary.com/dlk93aehl/image/upload/v1774457587/landing10.jpg',
-  'https://res.cloudinary.com/dlk93aehl/image/upload/v1774457587/landing11.jpg'
+  'https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/v1774457587/landing7.jpg',
+  'https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/v1774457587/landing4.jpg',
+  'https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/v1774457587/landing1.jpg',
+  'https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/v1774457587/landing2.jpg',
+  'https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/v1774457587/landing3.jpg',
+  'https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/v1774457587/landing5.jpg',
+  'https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/v1774457587/landing6.jpg',
+  'https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/v1774457587/landing8.jpg',
+  'https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/v1774457587/landing9.jpg',
+  'https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/v1774457587/landing10.jpg',
+  'https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/v1774457587/landing11.jpg'
 ];
 
 interface HeroProps {

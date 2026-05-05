@@ -18,16 +18,16 @@ const Services360 = () => {
   // --- TOUR CONFIGURATION ---
   const scenes: Record<string, any> = {
     nav3: {
-      image: "https://res.cloudinary.com/dlk93aehl/image/upload/Nav3.jpg",
+      image: "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav3.jpg",
       initialYaw: 190,
       hotspots: [
         { pitch: -10, yaw: 190, text: "Member's Lounge", target: "nav4" },
-        { pitch: -40, yaw: 100, text: "View Documents", target: "modal", imageUrl: "https://res.cloudinary.com/dlk93aehl/image/upload/Nav3-1.png", iconType: "eye" },
-        { pitch: -10, yaw: 240, text: "View Documents 2", target: "modal", imageUrl: "https://res.cloudinary.com/dlk93aehl/image/upload/Nav3-2.png", iconType: "eye" },
+        { pitch: -40, yaw: 100, text: "View Documents", target: "modal", imageUrl: "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav3-1.png", iconType: "eye" },
+        { pitch: -10, yaw: 240, text: "View Documents 2", target: "modal", imageUrl: "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav3-2.png", iconType: "eye" },
       ]
     },
     nav4: {
-      image: "https://res.cloudinary.com/dlk93aehl/image/upload/Nav4.jpg",
+      image: "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav4.jpg",
       initialYaw: 0,
       hotspots: [
         { pitch: -3, yaw: 195, text: "Reception", target: "nav3" },
@@ -35,17 +35,17 @@ const Services360 = () => {
       ]
     },
     nav5: {
-      image: "https://res.cloudinary.com/dlk93aehl/image/upload/Nav5.jpg",
+      image: "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav5.jpg",
       initialYaw: -30,
       hotspots: [
         { pitch: -5, yaw: -110, text: "Reception", target: "nav4" },
         { pitch: -2, yaw: -30, text: "Upper Deck", target: "nav6" },
-        { pitch: 17, yaw: 27, text: "View Medals", target: "modal", imageUrl: "https://res.cloudinary.com/dlk93aehl/image/upload/Nav5-1.png", iconType: "eye" },
+        { pitch: 17, yaw: 27, text: "View Medals", target: "modal", imageUrl: "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav5-1.png", iconType: "eye" },
 
       ]
     },
     nav6: {
-      image: "https://res.cloudinary.com/dlk93aehl/image/upload/Nav6.jpg",
+      image: "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav6.jpg",
       initialYaw: 180,
       hotspots: [
         { pitch: -5, yaw: 105, text: "Lower Deck", target: "nav5" },
@@ -53,7 +53,7 @@ const Services360 = () => {
       ]
     },
     nav7: {
-      image: "https://res.cloudinary.com/dlk93aehl/image/upload/Nav7.jpg",
+      image: "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav7.jpg",
       initialYaw: 40,
       hotspots: [
         { pitch: -30, yaw: -4, text: "Back", target: "nav6" },
@@ -61,25 +61,25 @@ const Services360 = () => {
       ]
     },
     nav8: {
-      image: "https://res.cloudinary.com/dlk93aehl/image/upload/Nav8.jpg",
+      image: "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav8.jpg",
       initialYaw: 0,
       hotspots: [
         { pitch: -5, yaw: -10, text: "Exit Room", target: "nav7" },
         { pitch: -7, yaw: -120, text: "Private Suite B", target: "nav9_1" },
         { pitch: 0, yaw: 150, text: "View Medals", target: "modal", imageUrl: "/assets/360/Nav8-1.png", iconType: "eye" },
         { pitch: -7, yaw: 120, text: "Private Suite C", target: "nav9_2" },
-        { pitch: 12, yaw: -140, text: "View Medals", target: "modal", imageUrl: "https://res.cloudinary.com/dlk93aehl/image/upload/Nav8-2.png", iconType: "eye" },
+        { pitch: 12, yaw: -140, text: "View Medals", target: "modal", imageUrl: "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav8-2.png", iconType: "eye" },
       ]
     },
     nav9_1: {
-      image: "https://res.cloudinary.com/dlk93aehl/image/upload/Nav9-1.jpg",
+      image: "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav9-1.jpg",
       initialYaw: 70,
       hotspots: [
         { pitch: -5, yaw: 70, text: "Back to Hall", target: "nav8" }
       ]
     },
     nav9_2: {
-      image: "https://res.cloudinary.com/dlk93aehl/image/upload/Nav9-2.jpg",
+      image: "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav9-2.jpg",
       initialYaw: 70,
       hotspots: [
         { pitch: -5, yaw: 70, text: "Back to Hall", target: "nav8" }
@@ -278,22 +278,22 @@ const Services360 = () => {
                   {/* ========================================================= */}
                   {/* HOTSPOTS FOR NAV 3-1 */}
                   {/* ========================================================= */}
-                  {modalImage === "https://res.cloudinary.com/dlk93aehl/image/upload/Nav3-1.png" && (
+                  {modalImage === "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav3-1.png" && (
                     <>
                       <div className="absolute top-[10%] left-[50%] -translate-x-1/2 -translate-y-1/2 z-40">
-                        <div className="espasyo-marker-content modal-eye-hotspot" onClick={(e) => { e.stopPropagation(); setModalImage("https://res.cloudinary.com/dlk93aehl/image/upload/Nav3-1-1.png"); }} title="Click for closer view">
+                        <div className="espasyo-marker-content modal-eye-hotspot" onClick={(e) => { e.stopPropagation(); setModalImage("https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav3-1-1.png"); }} title="Click for closer view">
                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></svg>
                         </div>
                       </div>
 
                       <div className="absolute top-[40%] left-[20%] z-40">
-                        <div className="espasyo-marker-content modal-eye-hotspot" onClick={(e) => { e.stopPropagation(); setModalImage("https://res.cloudinary.com/dlk93aehl/image/upload/Nav3-1-3.png"); }} title="Click for close-up view">
+                        <div className="espasyo-marker-content modal-eye-hotspot" onClick={(e) => { e.stopPropagation(); setModalImage("https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav3-1-3.png"); }} title="Click for close-up view">
                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></svg>
                         </div>
                       </div>
 
                       <div className="absolute bottom-[20%] left-[20%] z-40">
-                        <div className="espasyo-marker-content modal-eye-hotspot" onClick={(e) => { e.stopPropagation(); setModalImage("https://res.cloudinary.com/dlk93aehl/image/upload/Nav3-1-4.png"); }} title="Click for close-up view">
+                        <div className="espasyo-marker-content modal-eye-hotspot" onClick={(e) => { e.stopPropagation(); setModalImage("https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav3-1-4.png"); }} title="Click for close-up view">
                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></svg>
                         </div>
                       </div>
@@ -303,18 +303,18 @@ const Services360 = () => {
                   {/* ========================================================= */}
                   {/* HOTSPOTS FOR NAV 3-2 (NEW!) */}
                   {/* ========================================================= */}
-                  {modalImage === "https://res.cloudinary.com/dlk93aehl/image/upload/Nav3-2.png" && (
+                  {modalImage === "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav3-2.png" && (
                     <>
                       {/* Nav3-2-1 Link */}
                       <div className="absolute top-[28%] left-[33%] -translate-x-1/2 -translate-y-1/2 z-40">
-                        <div className="espasyo-marker-content modal-eye-hotspot" onClick={(e) => { e.stopPropagation(); setModalImage("https://res.cloudinary.com/dlk93aehl/image/upload/Nav3-2-1.png"); }} title="Click for close-up view">
+                        <div className="espasyo-marker-content modal-eye-hotspot" onClick={(e) => { e.stopPropagation(); setModalImage("https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav3-2-1.png"); }} title="Click for close-up view">
                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></svg>
                         </div>
                       </div>
 
                       {/* Nav3-2-2 Link */}
                       <div className="absolute bottom-[20%] left-[33%] -translate-x-1/2 -translate-y-1/2 z-40">
-                        <div className="espasyo-marker-content modal-eye-hotspot" onClick={(e) => { e.stopPropagation(); setModalImage("https://res.cloudinary.com/dlk93aehl/image/upload/Nav3-2-2.png"); }} title="Click for close-up view">
+                        <div className="espasyo-marker-content modal-eye-hotspot" onClick={(e) => { e.stopPropagation(); setModalImage("https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav3-2-2.png"); }} title="Click for close-up view">
                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="3" /></svg>
                         </div>
                       </div>
@@ -326,20 +326,20 @@ const Services360 = () => {
                 {/* DYNAMIC BACK BUTTONS */}
                 {/* ========================================================= */}
                 {/* Back button for Nav3-1 Sub-details */}
-                {(modalImage === "https://res.cloudinary.com/dlk93aehl/image/upload/Nav3-1-1.png" || modalImage === "https://res.cloudinary.com/dlk93aehl/image/upload/Nav3-1-3.png" || modalImage === "https://res.cloudinary.com/dlk93aehl/image/upload/Nav3-1-4.png") && (
+                {(modalImage === "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav3-1-1.png" || modalImage === "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav3-1-3.png" || modalImage === "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav3-1-4.png") && (
                   <button
                     className="absolute bottom-4 left-1/2 -translate-x-1/2 z-50 px-6 py-2 bg-black/80 hover:bg-[#FEEBCA] text-[#FEEBCA] hover:text-[#482216] rounded-full text-xs font-bold uppercase tracking-widest transition-colors duration-300 backdrop-blur-md border border-white/20 shadow-lg animate-image-transition pointer-events-auto"
-                    onClick={(e) => { e.stopPropagation(); setModalImage("https://res.cloudinary.com/dlk93aehl/image/upload/Nav3-1.png"); }}
+                    onClick={(e) => { e.stopPropagation(); setModalImage("https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav3-1.png"); }}
                   >
                     ← Back
                   </button>
                 )}
 
                 {/* Back button for Nav3-2 Sub-details */}
-                {(modalImage === "https://res.cloudinary.com/dlk93aehl/image/upload/Nav3-2-1.png" || modalImage === "https://res.cloudinary.com/dlk93aehl/image/upload/Nav3-2-2.png") && (
+                {(modalImage === "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav3-2-1.png" || modalImage === "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav3-2-2.png") && (
                   <button
                     className="absolute bottom-4 left-1/2 -translate-x-1/2 z-50 px-6 py-2 bg-black/80 hover:bg-[#FEEBCA] text-[#FEEBCA] hover:text-[#482216] rounded-full text-xs font-bold uppercase tracking-widest transition-colors duration-300 backdrop-blur-md border border-white/20 shadow-lg animate-image-transition pointer-events-auto"
-                    onClick={(e) => { e.stopPropagation(); setModalImage("https://res.cloudinary.com/dlk93aehl/image/upload/Nav3-2.png"); }}
+                    onClick={(e) => { e.stopPropagation(); setModalImage("https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/Nav3-2.png"); }}
                   >
                     ← Back
                   </button>

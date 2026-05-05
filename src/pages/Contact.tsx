@@ -86,7 +86,7 @@ const Contact = ({ hideNavbar = false }: ContactProps) => {
 
                 <div className="w-full h-32 sm:h-44 rounded-xl overflow-hidden shadow-lg relative group cursor-pointer">
                   <img
-                    src="https://res.cloudinary.com/dlk93aehl/image/upload/v1774545067/espasyoMaps.png"
+                    src="https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/v1774545067/espasyoMaps.png"
                     alt="Espasyo Location Map"
                     className="w-full h-full object-cover grayscale contrast-125 opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 scale-105 group-hover:scale-100"
                   />

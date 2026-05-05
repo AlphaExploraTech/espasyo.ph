@@ -6,7 +6,7 @@ import { Draggable } from 'gsap/all';
 import DetailModal from './Shared/Modals/DetailModal';
 import FounderModal from './Shared/Modals/FounderModal';
 import Navbar from './Common/Navbar';
-const LOGO = "https://res.cloudinary.com/dlk93aehl/image/upload/LOGO.png";
+const LOGO = "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/LOGO.png";
 import testimonialsData from '../data/testimonials.json';
 
 gsap.registerPlugin(Draggable);
@@ -15,12 +15,12 @@ gsap.registerPlugin(Draggable);
 // Since local assets were deleted, import.meta.glob cannot scan files anymore.
 // Add all your Cloudinary image URLs into this array:
 const cloudinaryCoworkingUrls: string[] = [
-  "https://res.cloudinary.com/dlk93aehl/image/upload/v1774453003/att.boEIijzqnkbNC3laxiXX9bYfo62R9H0OBArnupqFviY.jpg"
+  "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/v1774453003/att.boEIijzqnkbNC3laxiXX9bYfo62R9H0OBArnupqFviY.jpg"
   // ... Paste the rest of your coworking Cloudinary URLs here!
 ];
 
 const cloudinaryEventUrls: string[] = [
-  "https://res.cloudinary.com/dlk93aehl/image/upload/v1774453017/att.kZ3SEWXB5oQ4AShNyTHRv8PSpodbx9s0DPOG-hI_mRE.jpg"
+  "https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/v1774453017/att.kZ3SEWXB5oQ4AShNyTHRv8PSpodbx9s0DPOG-hI_mRE.jpg"
   // ... Paste the rest of your events Cloudinary URLs here!
 ];
 

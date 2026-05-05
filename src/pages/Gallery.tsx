@@ -176,7 +176,7 @@ const Gallery = () => {
                       img.dataset.retry = String(retry + 1);
                     } else {
 
-                      img.src = 'https://res.cloudinary.com/dlk93aehl/image/upload/v1774459535/g30.jpg';
+                      img.src = 'https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/v1774459535/g30.jpg';
                     }
                   }}
                 />

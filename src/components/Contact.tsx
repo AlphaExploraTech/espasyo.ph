@@ -142,7 +142,7 @@ const Contact = () => {
                                 </a>
                                 <div className="w-full h-48 rounded-xl overflow-hidden border-2 border-[#F0EAD6]/10 shadow-lg relative group cursor-pointer">
                                     <img
-                                        src="https://res.cloudinary.com/dlk93aehl/image/upload/v1774546085/espasyoMaps.png"
+                                        src="https://res.cloudinary.com/dlk93aehl/image/upload/f_auto,q_auto/v1774546085/espasyoMaps.png"
                                         alt="Espasyo Location Map"
                                         className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
                                     />
