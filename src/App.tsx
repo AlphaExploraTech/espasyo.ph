@@ -1,18 +1,19 @@
-import { useEffect } from "react";
+import { useEffect, lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, useLocation, Link } from "react-router-dom";
 import Lenis from "lenis";
-import gsap from "gsap"; // NEW IMPORT
-import { ScrollTrigger } from "gsap/ScrollTrigger"; // NEW IMPORT
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import Home from "./pages/Home";
-import Gallery from "./pages/Gallery";
-import Testimonials from "./pages/Testimonials";
-import Resources from "./pages/Resources";
-import Contact from "./pages/Contact";
-import Reviews from './pages/Reviews';
-
-// Register ScrollTrigger globally here as well to be safe
+// Register ScrollTrigger globally
 gsap.registerPlugin(ScrollTrigger);
+
+// Lazy-loaded page components (Rule 6)
+const Home = lazy(() => import("./features/home/views/Home"));
+const Gallery = lazy(() => import("./features/gallery/views/Gallery"));
+const Testimonials = lazy(() => import("./features/testimonials/views/Testimonials"));
+const Resources = lazy(() => import("./features/resources/views/Resources"));
+const Reviews = lazy(() => import("./features/reviews/views/Reviews"));
+const Contact = lazy(() => import("./features/contact/views/Contact"));
 
 // Helper to reset scroll on route change
 const ScrollToTop = () => {
@@ -35,14 +36,12 @@ function App() {
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     });
 
-    // 2. CRITICAL: Sync Lenis scroll events with GSAP ScrollTrigger
-    // This tells GSAP to update its calculations whenever Lenis scrolls the page.
+    // 2. Sync Lenis scroll events with GSAP ScrollTrigger
     lenis.on("scroll", ScrollTrigger.update);
 
     // 3. Add Lenis to GSAP's Ticker
-    // This ensures animations run in perfect sync with the smooth scroll
     gsap.ticker.add((time) => {
-      lenis.raf(time * 1000); // Convert to milliseconds
+      lenis.raf(time * 1000);
     });
 
     // 4. Disable lag smoothing for smoother scroll performance
@@ -74,19 +73,49 @@ function App() {
     );
   };
 
+  // Loading fallback for lazy-loaded pages
+  const PageLoader = () => (
+    <div className="fixed inset-0 bg-[#FDF4DC] flex items-center justify-center z-[9999]">
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-12 h-px bg-[#B56A54]/60" />
+        <p className="font-display text-[#3A2618] text-xl uppercase tracking-[0.35em] font-bold">
+          ESPASYO
+        </p>
+        <div className="flex items-center gap-2 mt-1">
+          {[0, 0.18, 0.36].map((delay, i) => (
+            <span
+              key={i}
+              className="w-1.5 h-1.5 rounded-full bg-[#B56A54]"
+              style={{ animation: `navdot 0.9s ease-in-out ${delay}s infinite` }}
+            />
+          ))}
+        </div>
+        <div className="w-12 h-px bg-[#B56A54]/60" />
+      </div>
+      <style>{`
+        @keyframes navdot {
+          0%, 80%, 100% { transform: scale(1); opacity: 0.35; }
+          40%            { transform: scale(1.5); opacity: 1; }
+        }
+      `}</style>
+    </div>
+  );
+
   return (
     <BrowserRouter>
       <ScrollToTop />
       <div className="antialiased bg-[#FDF4DC] min-h-screen relative">
         <GlobalCTA />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/testimonials" element={<Testimonials />} />
-          <Route path="/resources" element={<Resources />} />
-          <Route path="/reviews" element={<Reviews />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/testimonials" element={<Testimonials />} />
+            <Route path="/resources" element={<Resources />} />
+            <Route path="/reviews" element={<Reviews />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </Suspense>
       </div>
     </BrowserRouter>
   );
