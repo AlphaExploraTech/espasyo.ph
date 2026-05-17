@@ -63,7 +63,7 @@ const Hero = ({ introFinished, onNavigate }: HeroProps) => {
           <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#FDF4DC] text-[#3A2618] flex items-center justify-center group-hover:scale-105 group-hover:bg-white transition-all shadow-[0_0_30px_rgba(253,244,220,0.5)] animate-pulse-subtle border-4 border-white/20 bg-clip-padding">
             <ChevronLeft strokeWidth={2.5} className="w-8 h-8 md:w-10 md:h-10 group-hover:-translate-x-1 transition-transform" />
           </div>
-          <span className="font-body text-[10px] md:text-sm uppercase tracking-[0.2em] font-black text-[#FDF4DC] bg-[#3A2618]/80 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg whitespace-nowrap opacity-90 group-hover:opacity-100 group-hover:-translate-y-1 transition-all">
+          <span className="font-body text-[10px] md:text-sm uppercase tracking-[0.2em] font-black text-[#FDF4DC] bg-[#3A2618]/95 px-3 py-1.5 rounded-full shadow-lg whitespace-nowrap opacity-90 group-hover:opacity-100 group-hover:-translate-y-1 transition-all">
             Our Story
           </span>
         </button>
@@ -76,7 +76,7 @@ const Hero = ({ introFinished, onNavigate }: HeroProps) => {
           <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#FDF4DC] text-[#3A2618] flex items-center justify-center group-hover:scale-105 group-hover:bg-white transition-all shadow-[0_0_30px_rgba(253,244,220,0.5)] animate-pulse-subtle border-4 border-white/20 bg-clip-padding">
             <ChevronRight strokeWidth={2.5} className="w-8 h-8 md:w-10 md:h-10 group-hover:translate-x-1 transition-transform" />
           </div>
-          <span className="font-body text-[10px] md:text-sm uppercase tracking-[0.2em] font-black text-[#FDF4DC] bg-[#3A2618]/80 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-lg whitespace-nowrap opacity-90 group-hover:opacity-100 group-hover:-translate-y-1 transition-all">
+          <span className="font-body text-[10px] md:text-sm uppercase tracking-[0.2em] font-black text-[#FDF4DC] bg-[#3A2618]/95 px-3 py-1.5 rounded-full shadow-lg whitespace-nowrap opacity-90 group-hover:opacity-100 group-hover:-translate-y-1 transition-all">
             Community
           </span>
         </button>
@@ -87,7 +87,7 @@ const Hero = ({ introFinished, onNavigate }: HeroProps) => {
       <div className={`absolute bottom-20 md:bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3 transition-opacity duration-1000 delay-500 ${introFinished ? 'opacity-100' : 'opacity-0'}`}>
         
         {/* Uniform High-Contrast Text Pill */}
-        <div className="text-center font-body text-[11px] md:text-sm uppercase tracking-[0.2em] font-black text-[#FDF4DC] bg-[#3A2618]/80 backdrop-blur-sm px-6 py-3 rounded-full shadow-2xl opacity-90 leading-relaxed border border-[#FDF4DC]/10">
+        <div className="text-center font-body text-[11px] md:text-sm uppercase tracking-[0.2em] font-black text-[#FDF4DC] bg-[#3A2618]/95 px-6 py-3 rounded-full shadow-2xl opacity-90 leading-relaxed border border-[#FDF4DC]/10">
           Scroll to see <br /> Our Services
         </div>
 

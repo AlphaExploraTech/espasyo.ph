@@ -20,11 +20,19 @@ const StorySection = ({
     const scrollEl = scrollAreaRef.current;
     if (!scrollEl) return;
 
+    let ticking = false;
+
     const handleScroll = () => {
-      const { scrollTop, scrollHeight, clientHeight } = scrollEl;
-      const maxScroll = scrollHeight - clientHeight;
-      const progress = maxScroll > 0 ? scrollTop / maxScroll : 0;
-      setScrollProgress(progress);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const { scrollTop, scrollHeight, clientHeight } = scrollEl;
+          const maxScroll = scrollHeight - clientHeight;
+          const progress = maxScroll > 0 ? scrollTop / maxScroll : 0;
+          setScrollProgress(progress);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     scrollEl.addEventListener('scroll', handleScroll, { passive: true });
@@ -120,10 +128,10 @@ const StorySection = ({
                   {/* Polaroid Card */}
                   <div
                     onClick={(e) => handlePolaroidClick(item, e)}
-                    className={`polaroid-entry bg-[#FDF4DC] p-4 sm:p-6 md:p-8 lg:p-12 pb-16 sm:pb-20 md:pb-24 lg:pb-32 polaroid-shadow hover:scale-[1.02] transition-transform duration-500 ease-out w-full max-w-[400px] md:max-w-[550px] lg:max-w-[700px] group rounded-xl mx-auto cursor-pointer`}
+                    className={`polaroid-entry bg-[#FDF4DC] p-4 sm:p-6 md:p-8 lg:p-12 pb-16 sm:pb-20 md:pb-24 lg:pb-32 polaroid-shadow hover:scale-[1.02] transition-transform duration-500 ease-out w-full max-w-[400px] md:max-w-[550px] lg:max-w-[700px] group rounded-xl mx-auto cursor-pointer transform-gpu will-change-transform`}
                   >
                     <div className="aspect-square w-full overflow-hidden mb-4 sm:mb-5 md:mb-6 relative rounded-lg bg-[#3A2618]/5 shadow-inner flex items-center justify-center">
-                      <img src={item.src || ''} alt={item.caption} className="w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-105" />
+                      <img src={item.src || ''} alt={item.caption} loading="lazy" decoding="async" className="w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-105" />
                     </div>
                     <div className="text-center">
                       <h3 className="font-mono font-bold text-lg sm:text-xl md:text-2xl lg:text-3xl text-[#482216] tracking-tight leading-tight">{item.caption}</h3>

@@ -236,7 +236,6 @@ const Services360 = () => {
         <div
           onMouseLeave={() => setIsInteractive(false)}
           className="w-full h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[80vh] min-h-[280px] relative group z-20 bg-black shadow-[0_30px_60px_rgba(0,0,0,0.3)] overflow-hidden"
-          style={{ filter: 'sepia(0.2) saturate(1.2) contrast(1.05) brightness(1.05)' }}
         >
           {/* INTERACTION OVERLAY */}
           {!isInteractive && (
@@ -273,7 +272,7 @@ const Services360 = () => {
 
                 {/* --- IMAGE TRANSITION CONTAINER --- */}
                 <div key={modalImage} className="relative inline-block max-h-[80vh] animate-image-transition">
-                  <img src={modalImage} alt="Detail View" className="max-w-full max-h-[80vh] object-contain rounded-xl shadow-2xl border border-[#FEEBCA]/20" />
+                  <img src={modalImage} alt="Detail View" loading="lazy" decoding="async" className="max-w-full max-h-[80vh] object-contain rounded-xl shadow-2xl border border-[#FEEBCA]/20" />
 
                   {/* ========================================================= */}
                   {/* HOTSPOTS FOR NAV 3-1 */}

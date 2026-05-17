@@ -6,11 +6,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Navbar from '../../../shared/components/Navbar';
 import Intro from './Intro';
 import Hero from './Hero';
-import StorySection from './StorySection';
-import ServicesSection from './ServicesSection';
-import Services360 from './Services360';
-import Testimonials from '../../testimonials/views/Testimonials';
-import Contact from '../../contact/views/Contact';
+import { Suspense, lazy } from 'react';
+
+const StorySection = lazy(() => import('./StorySection'));
+const ServicesSection = lazy(() => import('./ServicesSection'));
+const Services360 = lazy(() => import('./Services360'));
+const Testimonials = lazy(() => import('../../testimonials/views/Testimonials'));
+const Contact = lazy(() => import('../../contact/views/Contact'));
+
 import DetailModal from '../../../shared/components/DetailModal';
 import FounderModal from '../../../shared/components/FounderModal';
 import { GalleryModal } from '../../../shared/components/GalleryModal';
@@ -83,24 +86,27 @@ const Home = () => {
 
     const activeService = serviceCategories[currentIndex];
 
-    // Navbar theme based on active view and scroll position
+    // High-performance theme switching using IntersectionObserver (eliminates scroll layout thrashing)
     const [scrolledTheme, setScrolledTheme] = useState<'default' | 'brown'>('default');
     useEffect(() => {
-        const scrollCol = document.getElementById('main-scroll-column');
-        if (!scrollCol) return;
-        const handleScroll = () => {
-             const servicesTop = document.getElementById('services')?.offsetTop || 0;
-             const services360Top = document.getElementById('services-360')?.offsetTop || 999999;
-             
-             // Transition to green (brown theme) when in services, back to cream (default) for 360 tour
-             if (scrollCol.scrollTop >= servicesTop - 100 && scrollCol.scrollTop < services360Top - 100) {
-                  setScrolledTheme('brown');
-             } else {
-                  setScrolledTheme('default');
-             }
-        };
-        scrollCol.addEventListener('scroll', handleScroll);
-        return () => scrollCol.removeEventListener('scroll', handleScroll);
+        const servicesSection = document.getElementById('services');
+        if (!servicesSection) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    setScrolledTheme('brown');
+                } else {
+                    setScrolledTheme('default');
+                }
+            });
+        }, {
+            root: document.getElementById('main-scroll-column'),
+            threshold: 0.1 // Trigger when 10% of services section is visible
+        });
+
+        observer.observe(servicesSection);
+        return () => observer.disconnect();
     }, [activeView]);
 
     const navTheme = (activeView === 'hero' && scrolledTheme === 'brown') ? 'brown' : 'default';
@@ -187,8 +193,9 @@ const Home = () => {
 
                     {/* 1B. SERVICES */}
                     <div id="services" className="w-full relative bg-[#2C3628] text-[#F0EAD6] z-0">
-                        <ServicesSection 
-                            activeService={activeService}
+                        <Suspense fallback={<div className="h-screen w-full bg-[#2C3628]" />}>
+                            <ServicesSection 
+                                activeService={activeService}
                             servicesContentRef={{ current: null }}
                             handleTouchStart={carouselTouchStart}
                             handleTouchMove={handleTouchMove}
@@ -205,40 +212,49 @@ const Home = () => {
                             handleGalleryClick={handleGalleryClick}
                             getSlideStyles={getSlideStyles}
                         />
+                        </Suspense>
                     </div>
 
                     {/* 1C. 360 TOUR & CTA */}
                     <div id="services-360" className="w-full relative">
-                        <Services360 />
+                        <Suspense fallback={<div className="h-screen w-full bg-[#FEEBCA]" />}>
+                            <Services360 />
+                        </Suspense>
                     </div>
 
                     {/* 1D. CONTACT & FOOTER */}
                     <div id="contact" className="w-full relative">
-                        <Contact hideNavbar={true} />
+                        <Suspense fallback={<div className="h-screen w-full bg-[#3A2618]" />}>
+                            <Contact hideNavbar={true} />
+                        </Suspense>
                     </div>
                 </div>
 
                 {/* 2. LEFT: STORY SECTION */}
                 <div className={`absolute top-0 left-[-100vw] w-screen h-screen bg-[#FDF4DC] transition-all duration-300 ${activeView === 'story' ? 'z-20 pointer-events-auto opacity-100' : 'z-0 pointer-events-none opacity-0'}`}>
-                    <StorySection 
-                        testimonialData={testimonialData}
-                        handleViewAllClick={handleViewAllClick}
-                        handleGalleryTransition={handleGalleryClick}
-                        handlePolaroidClick={handlePolaroidClick}
-                    />
+                    <Suspense fallback={<div className="h-screen w-full bg-[#FDF4DC]" />}>
+                        <StorySection 
+                            testimonialData={testimonialData}
+                            handleViewAllClick={handleViewAllClick}
+                            handleGalleryTransition={handleGalleryClick}
+                            handlePolaroidClick={handlePolaroidClick}
+                        />
+                    </Suspense>
                 </div>
 
                 {/* 3. RIGHT: TESTIMONIALS */}
                 <div className={`absolute top-0 left-[100vw] w-screen h-screen bg-[#FDF4DC] overflow-y-auto no-scrollbar transition-all duration-300 ${activeView === 'testimonials' ? 'z-20 pointer-events-auto opacity-100' : 'z-0 pointer-events-none opacity-0'}`} data-lenis-prevent="true">
                     {/* Render Testimonials natively, hide its internal navbar */}
                     <div className="relative w-full min-h-screen pb-12">
-                        <Testimonials 
-                            hideNavbar={true} 
-                            onBusinessClick={(b) => {
-                                console.log('📍 Hub: setSelectedBusiness called for:', b?.businessName);
-                                setSelectedBusiness(b);
-                            }} 
-                        />
+                        <Suspense fallback={<div className="h-screen w-full bg-[#FDF4DC]" />}>
+                            <Testimonials 
+                                hideNavbar={true} 
+                                onBusinessClick={(b) => {
+                                    console.log('📍 Hub: setSelectedBusiness called for:', b?.businessName);
+                                    setSelectedBusiness(b);
+                                }} 
+                            />
+                        </Suspense>
                     </div>
                 </div>
 

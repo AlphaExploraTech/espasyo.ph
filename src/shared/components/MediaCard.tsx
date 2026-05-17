@@ -40,6 +40,7 @@ export const MediaCard = ({ business, onClick }: { business: Business, onClick: 
                         alt={business.businessName} 
                         className="max-w-full max-h-16 sm:max-h-20 md:max-h-full object-contain transition-transform duration-700 group-hover:scale-110 drop-shadow-lg relative z-10" 
                         loading="lazy"
+                        decoding="async"
                     />
                 ) : (
                     <div 

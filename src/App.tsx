@@ -44,8 +44,8 @@ function App() {
       lenis.raf(time * 1000);
     });
 
-    // 4. Disable lag smoothing for smoother scroll performance
-    gsap.ticker.lagSmoothing(0);
+    // 4. Disable lag smoothing for smoother scroll performance (WARNING: Causes massive lag on low-end mobile devices during heavy animations, reverting to default)
+    // gsap.ticker.lagSmoothing(0);
 
     // Cleanup function
     return () => {

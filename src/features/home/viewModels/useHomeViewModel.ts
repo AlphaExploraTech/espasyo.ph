@@ -70,23 +70,27 @@ export const useHomeViewModel = () => {
 
   const activeService = serviceCategories[currentIndex];
 
-  // Navbar theme based on active view and scroll position
+  // High-performance theme switching using IntersectionObserver
   const [scrolledTheme, setScrolledTheme] = useState<'default' | 'brown'>('default');
   useEffect(() => {
-    const scrollCol = document.getElementById('main-scroll-column');
-    if (!scrollCol) return;
-    const handleScroll = () => {
-      const servicesTop = document.getElementById('services')?.offsetTop || 0;
-      const services360Top = document.getElementById('services-360')?.offsetTop || 999999;
+    const servicesSection = document.getElementById('services');
+    if (!servicesSection) return;
 
-      if (scrollCol.scrollTop >= servicesTop - 100 && scrollCol.scrollTop < services360Top - 100) {
-        setScrolledTheme('brown');
-      } else {
-        setScrolledTheme('default');
-      }
-    };
-    scrollCol.addEventListener('scroll', handleScroll);
-    return () => scrollCol.removeEventListener('scroll', handleScroll);
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                setScrolledTheme('brown');
+            } else {
+                setScrolledTheme('default');
+            }
+        });
+    }, {
+        root: document.getElementById('main-scroll-column'),
+        threshold: 0.1
+    });
+
+    observer.observe(servicesSection);
+    return () => observer.disconnect();
   }, [activeView]);
 
   const navTheme = (activeView === 'hero' && scrolledTheme === 'brown') ? 'brown' : 'default';

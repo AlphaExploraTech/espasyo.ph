@@ -95,7 +95,7 @@ const ServicesSection = ({
                       transition: isHovering ? 'transform 0.1s ease-out' : 'all 0.7s cubic-bezier(0.25,0.8,0.25,1)'
                     }}
                   >
-                    <img src={service.image} alt={service.title} className="w-full h-full object-cover" />
+                    <img src={service.image} alt={service.title} loading="lazy" decoding="async" className="w-full h-full object-cover" />
                     {isCenter && <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none" style={{ opacity: isHovering ? 0.3 + (tilt.y / 20) : 0, transition: 'opacity 0.3s' }} />}
 
                     {/* Brown overlay + centered white text */}
@@ -134,8 +134,8 @@ const ServicesSection = ({
               <button onClick={handleGalleryClick} className="px-4 sm:px-6 md:px-8 py-1.5 sm:py-2 md:py-2 border-2 border-[#482216] text-[#482216] rounded-full text-xs font-bold uppercase tracking-widest hover:bg-[#482216] hover:text-[#FEEBCA] transition-colors">Show All Gallery</button>
             </div>
 
-            {/* Detailed Services Container */}
-            <div className="w-full max-w-5xl relative mt-8 bg-[#482216]/5 border border-[#482216]/10 backdrop-blur-md rounded-3xl overflow-hidden transition-all duration-500">
+            {/* Detailed Services Container (Optimized: removed backdrop-blur-md) */}
+            <div className="w-full max-w-5xl relative mt-8 bg-[#482216]/5 border border-[#482216]/10 rounded-3xl overflow-hidden transition-all duration-500">
               {serviceCategories.map((service, index) => (
                 <div
                   key={service.id}
